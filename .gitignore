@@ -1,4 +1,8 @@
+# Jupyter notebook
 .ipynb_checkpoints
 
 # Legacy Data
 data/*.csv
+
+# Node Dependencies
+node_modules/
