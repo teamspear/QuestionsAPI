@@ -1,11 +1,11 @@
 {
-  "name": "questions_and_answers_service",
+  "name": "questions_and_answers_express_server",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon --inspect server/index.js"
+    "dev": "nodemon --inspect index.js"
   },
   "keywords": [],
   "author": "Robert Battaglia",
