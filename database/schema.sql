@@ -1,4 +1,6 @@
-DROP TABLE IF EXISTS question, answer;
+CREATE DATABASE q_and_a;
+
+\c q_and_a;
 
 CREATE TABLE question(
    id INT NOT NULL PRIMARY KEY,
@@ -23,5 +25,5 @@ CREATE TABLE answer(
    photos TEXT []
 );
 
-\copy question FROM '/Users/me/Desktop/Hack_Reactor/QuestionsAPI/data/questions_wrangled.csv' DELIMITER ',' CSV HEADER;
-\copy answer FROM '/Users/me/Desktop/Hack_Reactor/QuestionsAPI/data/answers_wrangled.csv' DELIMITER ',' CSV HEADER;
+\copy question FROM '/usr/csvs/questions_wrangled.csv' DELIMITER ',' CSV HEADER;
+\copy answer FROM '/usr/csvs/answers_wrangled.csv' DELIMITER ',' CSV HEADER;

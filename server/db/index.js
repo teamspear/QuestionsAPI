@@ -1,10 +1,19 @@
 const pgp = require("pg-promise")();
+const {
+  dbUSERNAME,
+  dbPASSWORD,
+  dbHOST,
+  dbPORT,
+  dbDATABASE
+} = require("../keys");
 
-const host = process.env.HOST || "0.0.0.0";
-const port = process.env.PORT || 5432;
-const database = "questions";
-
-const connection = `postgres://${host}:${port}/${database}`;
+const connection = {
+  host: dbHOST,
+  port: dbPORT,
+  database: dbDATABASE,
+  user: dbUSERNAME,
+  password: dbPASSWORD
+};
 
 const db = pgp(connection);
 

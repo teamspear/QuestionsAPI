@@ -1,0 +1,23 @@
+version: "3"
+services:
+  db:
+    image: questionsapi_db:latest
+    restart: always
+    environment:
+      - POSTGRES_USERNAME=postgres
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - "./database/data:/usr/csvs"
+  node:
+    image: questionsapi_node:latest
+    ports:
+      - "3000:8080"
+    environment:
+      - dbUSERNAME=postgres
+      - dbPASSWORD=password
+      - dbHOST=db
+      - dbPORT=5432
+      - dbDATABASE=q_and_a
+    volumes:
+      - "/usr/src/app/node_modules"
+      - "./server:/usr/src/app"

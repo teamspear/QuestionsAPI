@@ -8,7 +8,8 @@ RUN npm install
 
 COPY . .
 
-EXPOSE 8080
+## Dont need to Exose ports when using docker-compose
+# EXPOSE 8080
 
 CMD npm run dev
 
