@@ -2,7 +2,7 @@
 .ipynb_checkpoints
 
 # Legacy Data
-data/*.csv
+database/data/*.csv
 
 # Node Dependencies
 node_modules

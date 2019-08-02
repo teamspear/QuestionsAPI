@@ -1,0 +1,18 @@
+version: "3"
+services:
+  db:
+    # image: "postgres:latest"
+    build: database/.
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD=password
+  node:
+    build: server/.
+    ports:
+      - "3000:8080"
+    environment:
+      - dbUSERNAME=postgres
+      - dbPASSWORD=password
+      - dbHOST=db
+      - dbPORT=5432
+      - dbDATABASE=questions

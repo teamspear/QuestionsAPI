@@ -8,6 +8,7 @@ const models = require("./models");
 
 app.get("/", (req, res) => {
   res.send("Hello Tom");
+  console.log("postgres");
   models.getQuestion(1);
 });
 
