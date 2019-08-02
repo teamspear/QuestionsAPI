@@ -7,8 +7,7 @@ const port = process.env.PORT || 8080;
 const models = require("./models");
 
 app.get("/", (req, res) => {
-  res.send("Hello Tom");
-  console.log("postgres");
+  res.send("Hello World!");
   models.getQuestion(1);
 });
 

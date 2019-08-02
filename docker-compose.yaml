@@ -1,13 +1,15 @@
 version: "3"
 services:
   db:
-    # image: "postgres:latest"
-    build: database/.
+    image: questionsapi_db:latest
     restart: always
     environment:
+      - POSTGRES_USERNAME=postgres
       - POSTGRES_PASSWORD=password
+    volumes:
+      - "./database/data:/usr/csvs"
   node:
-    build: server/.
+    image: questionsapi_node:latest
     ports:
       - "3000:8080"
     environment:
@@ -15,4 +17,7 @@ services:
       - dbPASSWORD=password
       - dbHOST=db
       - dbPORT=5432
-      - dbDATABASE=questions
+      - dbDATABASE=q_and_a
+    volumes:
+      - "/usr/src/app/node_modules"
+      - "./server:/usr/src/app"
