@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 
+router.use(express.json());
+
 const { questions, answers } = require("../models");
 
 // GET Questions
@@ -36,6 +38,17 @@ router.get("/:question_id/answers", (req, res) => {
 });
 
 // POST Question
+router.post("/:product_id", (req, res) => {
+  questions
+    .postQuestion(req.params.product_id, req.body)
+    .then(() => {
+      res.sendStatus(201);
+    })
+    .catch(err => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+});
 
 // POST Answer
 

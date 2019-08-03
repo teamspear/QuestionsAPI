@@ -11,6 +11,20 @@ const questions = {
     return db.any(query, [product_id, "false"]);
   },
 
+  postQuestion: (product_id, reqBody) => {
+    const query = `
+    INSERT INTO question (product_id, body, asker_name, asker_email)
+    VALUES ($1, $2, $3, $4) RETURNING id
+    `;
+
+    return db.any(query, [
+      product_id,
+      reqBody.body,
+      reqBody.name,
+      reqBody.email
+    ]);
+  },
+
   markQuestionHelpful: question_id => {
     const query = `
     UPDATE question
