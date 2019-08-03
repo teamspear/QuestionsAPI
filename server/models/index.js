@@ -2,13 +2,13 @@ const db = require("../db");
 
 const questions = {
   getQuestion: id => {
-    db.any("SELECT * FROM question WHERE id = $1", [id])
-      .then(function(data) {
-        console.log(data);
-      })
-      .catch(function(err) {
-        console.error(err);
-      });
+    const query = `
+    SELECT id as question_id, body as question_body, date_written as question_date,
+    asker_name, helpful as question_helpfulness
+    FROM question WHERE product_id = $1 and reported = $2
+    `;
+
+    return db.any(query, [id, "false"]);
   }
 };
 
