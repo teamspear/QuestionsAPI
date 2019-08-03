@@ -51,7 +51,19 @@ router.put("/question/:question_id/helpful", (req, res) => {
       res.sendStatus(500);
     });
 });
+
 // PUT Answer Helpful
+router.put("/answer/:answer_id/helpful", (req, res) => {
+  answers
+    .markAnswerHelpful(req.params.answer_id)
+    .then(() => {
+      res.sendStatus(204);
+    })
+    .catch(err => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+});
 
 // PUT Question Report
 

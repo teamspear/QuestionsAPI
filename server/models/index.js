@@ -31,6 +31,16 @@ const answers = {
     `;
 
     return db.any(query, [question_id, "false", count, offset]);
+  },
+
+  markAnswerHelpful: answer_id => {
+    const query = `
+    UPDATE answer
+    SET helpful = helpful + 1
+    WHERE id = $1
+    `;
+
+    return db.any(query, [answer_id]);
   }
 };
 
