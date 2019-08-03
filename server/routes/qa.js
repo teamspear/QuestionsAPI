@@ -35,4 +35,26 @@ router.get("/:question_id/answers", (req, res) => {
     });
 });
 
+// POST Question
+
+// POST Answer
+
+// PUT Question Helpful
+router.put("/question/:question_id/helpful", (req, res) => {
+  questions
+    .markQuestionHelpful(req.params.question_id)
+    .then(() => {
+      res.sendStatus(204);
+    })
+    .catch(err => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+});
+// PUT Answer Helpful
+
+// PUT Question Report
+
+// PUT Answer Report
+
 module.exports = router;

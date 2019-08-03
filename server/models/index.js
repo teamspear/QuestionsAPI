@@ -9,6 +9,16 @@ const questions = {
     `;
 
     return db.any(query, [product_id, "false"]);
+  },
+
+  markQuestionHelpful: question_id => {
+    const query = `
+    UPDATE question
+    SET helpful = helpful + 1
+    WHERE id = $1
+    `;
+
+    return db.any(query, [question_id]);
   }
 };
 
