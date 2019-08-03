@@ -1,8 +1,8 @@
 const db = require("../db");
 
-module.exports = {
+const questions = {
   getQuestion: id => {
-    db.any(`SELECT * FROM question WHERE id = ${id}`, [true])
+    db.any("SELECT * FROM question WHERE id = $1", [id])
       .then(function(data) {
         console.log(data);
       })
@@ -11,3 +11,11 @@ module.exports = {
       });
   }
 };
+
+const answers = {
+  getAnswers: id => {
+    //TODO:
+  }
+};
+
+module.exports = { questions, answers };
