@@ -79,5 +79,16 @@ router.put("/question/:question_id/report", (req, res) => {
 });
 
 // PUT Answer Report
+router.put("/answer/:answer_id/report", (req, res) => {
+  answers
+    .reportAnswer(req.params.answer_id)
+    .then(() => {
+      res.sendStatus(204);
+    })
+    .catch(err => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+});
 
 module.exports = router;

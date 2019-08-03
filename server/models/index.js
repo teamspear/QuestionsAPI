@@ -51,6 +51,16 @@ const answers = {
     `;
 
     return db.any(query, [answer_id]);
+  },
+
+  reportAnswer: answer_id => {
+    const query = `
+    UPDATE answer
+    SET reported = true
+    WHERE id = $1
+    `;
+
+    return db.any(query, [answer_id]);
   }
 };
 
