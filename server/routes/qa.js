@@ -66,6 +66,17 @@ router.put("/answer/:answer_id/helpful", (req, res) => {
 });
 
 // PUT Question Report
+router.put("/question/:question_id/report", (req, res) => {
+  questions
+    .reportQuestion(req.params.question_id)
+    .then(() => {
+      res.sendStatus(204);
+    })
+    .catch(err => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+});
 
 // PUT Answer Report
 

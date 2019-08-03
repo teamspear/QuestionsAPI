@@ -19,6 +19,16 @@ const questions = {
     `;
 
     return db.any(query, [question_id]);
+  },
+
+  reportQuestion: question_id => {
+    const query = `
+    UPDATE question
+    SET reported = true
+    WHERE id = $1
+    `;
+
+    return db.any(query, [question_id]);
   }
 };
 
