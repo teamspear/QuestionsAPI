@@ -9,8 +9,25 @@ const { questions, answers } = require("../models");
 router.get("/:product_id", (req, res) => {
   questions
     .getQuestions(req.params.product_id)
-    .then(results => {
-      const data = { product_id: req.params.product_id, results };
+    .then(qsWithoutAs => {
+      const qsGettingAs = [];
+      for (let i = 0; i < qsWithoutAs.length; i++) {
+        const question = qsWithoutAs[i];
+        qsGettingAs.push(
+          questions.getAnswers(question.question_id).then(answers => {
+            question.answers = {};
+            for (let j = 0; j < answers.length; j++) {
+              const answer = answers[j];
+              question.answers[answer.id] = answer;
+            }
+            return question;
+          })
+        );
+      }
+      return Promise.all(qsGettingAs);
+    })
+    .then(qsWithAs => {
+      const data = { product_id: req.params.product_id, results: qsWithAs };
       res.send(data);
     })
     .catch(err => {

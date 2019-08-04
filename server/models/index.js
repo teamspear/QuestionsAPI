@@ -5,10 +5,19 @@ const questions = {
     const query = `
     SELECT id as question_id, body as question_body, date_written as question_date,
     asker_name, helpful as question_helpfulness
-    FROM question WHERE product_id = $1 and reported = $2
+    FROM question WHERE product_id = $1 and reported = false
     `;
 
-    return db.any(query, [product_id, "false"]);
+    return db.any(query, [product_id]);
+  },
+
+  getAnswers: question_id => {
+    const query = `
+    SELECT id, body, date_written as date, answerer_name, helpful as helpfulness, photos
+    FROM answer WHERE question_id = $1 and reported = false
+    `;
+
+    return db.any(query, [question_id]);
   },
 
   postQuestion: (product_id, reqBody) => {
@@ -50,11 +59,11 @@ const answers = {
   getAnswers: (question_id, offset, count) => {
     const query = `
     SELECT id as answer_id, body, date_written as date, answerer_name, helpful as helpfulness, photos
-    FROM answer WHERE question_id = $1 and reported = $2
-    LIMIT $3 OFFSET $4
+    FROM answer WHERE question_id = $1 and reported = false
+    LIMIT $2 OFFSET $3
     `;
 
-    return db.any(query, [question_id, "false", count, offset]);
+    return db.any(query, [question_id, count, offset]);
   },
 
   postAnswer: (question_id, reqBody) => {
