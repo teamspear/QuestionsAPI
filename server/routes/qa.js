@@ -51,6 +51,17 @@ router.post("/:product_id", (req, res) => {
 });
 
 // POST Answer
+router.post("/:question_id/answers", (req, res) => {
+  answers
+    .postAnswer(req.params.question_id, req.body)
+    .then(() => {
+      res.sendStatus(201);
+    })
+    .catch(err => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+});
 
 // PUT Question Helpful
 router.put("/question/:question_id/helpful", (req, res) => {

@@ -57,6 +57,21 @@ const answers = {
     return db.any(query, [question_id, "false", count, offset]);
   },
 
+  postAnswer: (question_id, reqBody) => {
+    const query = `
+    INSERT INTO answer (question_id, body, answerer_name, answerer_email, photos)
+    VALUES ($1, $2, $3, $4, $5) RETURNING id
+    `;
+
+    return db.any(query, [
+      question_id,
+      reqBody.body,
+      reqBody.name,
+      reqBody.email,
+      reqBody.photos
+    ]);
+  },
+
   markAnswerHelpful: answer_id => {
     const query = `
     UPDATE answer
