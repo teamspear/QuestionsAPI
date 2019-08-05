@@ -30,3 +30,6 @@ CREATE TABLE answer(
 
 SELECT setval('question_id_seq'::regclass,3521634);
 SELECT setval('answer_id_seq'::regclass,12392946);
+
+CREATE INDEX ON question(product_id);
+CREATE INDEX ON answer(question_id);

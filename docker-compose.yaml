@@ -7,9 +7,10 @@ services:
       - POSTGRES_USERNAME=postgres
       - POSTGRES_PASSWORD=password
     volumes:
-      - "./database/data:/usr/csvs"
+      - "../efs:/usr/csvs"
   node:
     image: questionsapi_node:latest
+    restart: always
     ports:
       - "3000:8080"
     environment:
