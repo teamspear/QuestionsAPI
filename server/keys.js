@@ -3,5 +3,5 @@ module.exports = {
   dbPASSWORD: process.env.dbPASSWORD,
   dbHOST: process.env.dbHOST,
   dbPORT: process.env.dbPORT,
-  dbDATABASE: process.env.dbDATABASE
+  dbDATABASE: process.env.dbDATABASE,
 };

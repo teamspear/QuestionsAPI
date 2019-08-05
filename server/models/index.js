@@ -1,4 +1,5 @@
-const db = require("../db");
+/* eslint-disable camelcase */
+const db = require('../db');
 
 const questions = {
   getQuestions: (product_id, count, offset) => {
@@ -12,7 +13,7 @@ const questions = {
     return db.any(query, [product_id, count, offset]);
   },
 
-  getAnswers: question_id => {
+  getAnswers: (question_id) => {
     const query = `
     SELECT id, body, date_written as date, answerer_name, helpful as helpfulness, photos
     FROM answer WHERE question_id = $1 and reported = false
@@ -31,11 +32,11 @@ const questions = {
       product_id,
       reqBody.body,
       reqBody.name,
-      reqBody.email
+      reqBody.email,
     ]);
   },
 
-  markQuestionHelpful: question_id => {
+  markQuestionHelpful: (question_id) => {
     const query = `
     UPDATE question
     SET helpful = helpful + 1
@@ -45,7 +46,7 @@ const questions = {
     return db.any(query, [question_id]);
   },
 
-  reportQuestion: question_id => {
+  reportQuestion: (question_id) => {
     const query = `
     UPDATE question
     SET reported = true
@@ -53,7 +54,7 @@ const questions = {
     `;
 
     return db.any(query, [question_id]);
-  }
+  },
 };
 
 const answers = {
@@ -78,11 +79,11 @@ const answers = {
       reqBody.body,
       reqBody.name,
       reqBody.email,
-      reqBody.photos
+      reqBody.photos,
     ]);
   },
 
-  markAnswerHelpful: answer_id => {
+  markAnswerHelpful: (answer_id) => {
     const query = `
     UPDATE answer
     SET helpful = helpful + 1
@@ -92,7 +93,7 @@ const answers = {
     return db.any(query, [answer_id]);
   },
 
-  reportAnswer: answer_id => {
+  reportAnswer: (answer_id) => {
     const query = `
     UPDATE answer
     SET reported = true
@@ -100,7 +101,7 @@ const answers = {
     `;
 
     return db.any(query, [answer_id]);
-  }
+  },
 };
 
 module.exports = { questions, answers };
