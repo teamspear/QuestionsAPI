@@ -1,14 +1,15 @@
 const db = require("../db");
 
 const questions = {
-  getQuestions: product_id => {
+  getQuestions: (product_id, count, offset) => {
     const query = `
     SELECT id as question_id, body as question_body, date_written as question_date,
     asker_name, helpful as question_helpfulness
     FROM question WHERE product_id = $1 and reported = false
+    LIMIT $2 OFFSET $3
     `;
 
-    return db.any(query, [product_id]);
+    return db.any(query, [product_id, count, offset]);
   },
 
   getAnswers: question_id => {
@@ -56,7 +57,7 @@ const questions = {
 };
 
 const answers = {
-  getAnswers: (question_id, offset, count) => {
+  getAnswers: (question_id, count, offset) => {
     const query = `
     SELECT id as answer_id, body, date_written as date, answerer_name, helpful as helpfulness, photos
     FROM answer WHERE question_id = $1 and reported = false

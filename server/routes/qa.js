@@ -7,8 +7,12 @@ const { questions, answers } = require("../models");
 
 // GET Questions
 router.get("/:product_id", (req, res) => {
+  const page = req.query.page || 1;
+  const count = req.query.count || 5;
+  const offset = Math.max(0, (page - 1) * count);
+
   questions
-    .getQuestions(req.params.product_id)
+    .getQuestions(req.params.product_id, count, offset)
     .then(qsWithoutAs => {
       const qsGettingAs = [];
       for (let i = 0; i < qsWithoutAs.length; i++) {
@@ -40,10 +44,10 @@ router.get("/:product_id", (req, res) => {
 router.get("/:question_id/answers", (req, res) => {
   const page = req.query.page || 1;
   const count = req.query.count || 5;
-  const offset = (page - 1) * count;
+  const offset = Math.max(0, (page - 1) * count);
 
   answers
-    .getAnswers(req.params.question_id, offset, count)
+    .getAnswers(req.params.question_id, count, offset)
     .then(results => {
       const data = { question: req.params.question_id, page, count, results };
       res.send(data);
