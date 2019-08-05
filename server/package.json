@@ -5,12 +5,19 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon --inspect index.js"
+    "lint": "eslint .",
+    "precommit": "npm run lint",
+    "dev": "nodemon --inspect index.js",
+    "start": "node index.js"
   },
   "keywords": [],
   "author": "Robert Battaglia",
   "license": "ISC",
   "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.2.0",
+    "eslint-plugin-import": "^2.18.2",
+    "husky": "^3.0.2",
     "nodemon": "^1.19.1"
   },
   "dependencies": {
