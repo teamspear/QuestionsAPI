@@ -1,11 +1,14 @@
 const frisby = require('frisby');
 
 describe('GET Questions', () => {
-  it('should return 2 questions if given query param count of 2', () => frisby.get('http://localhost:3000/qa/1?count=2').then((data) => {
-    const { results } = JSON.parse(data.body);
-    const questionsLength = results.length;
-    expect(questionsLength).toBe(2);
-  }));
+  it('should return number of questions specified in query param count', () => {
+    const count = Math.ceil(Math.random() * 5);
+    return frisby.get(`http://localhost:3000/qa/1?count=${count}`).then((req) => {
+      const { results } = JSON.parse(req.body);
+      const questionsLength = results.length;
+      expect(questionsLength).toBe(count);
+    });
+  });
   it('should return questions for product id in url', () => {
     const num = Math.floor(Math.random() * 1000);
     return frisby.get(`http://localhost:3000/qa/${num}`).expect('json', 'product_id', num);
@@ -27,6 +30,24 @@ describe('POST Question', () => {
 });
 
 describe('PUT Question Helpfulness', () => {
+  it('should increment Question helpfulness by 1', () => {
+    const productID = Math.ceil(Math.random() * 1000000);
+    let questionID = null;
+    let helpfulness = null;
+    frisby
+      .get(`http://localhost:3000/qa/${productID}`)
+      .then((req) => {
+        const question = JSON.parse(req.body).results[0];
+        questionID = question.question_id;
+        helpfulness = question.question_helpfulness;
+        return frisby.put(`http://localhost:3000/qa/question/${questionID}/helpful`);
+      })
+      .then(() => frisby.get(`http://localhost:3000/qa/${productID}`))
+      .then((req) => {
+        const question = JSON.parse(req.body).results[0];
+        expect(question.question_helpfulness).toBe(helpfulness + 1);
+      });
+  });
   it('should return status 204', () => frisby.put('http://localhost:3000/qa/question/1/helpful').expect('status', 204));
 });
 describe('PUT Question Reported', () => {
