@@ -9,3 +9,6 @@ node_modules
 
 # DS store
 .DS_store
+
+# Jest Coverage Reports
+coverage
