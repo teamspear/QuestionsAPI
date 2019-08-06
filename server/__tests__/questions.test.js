@@ -34,7 +34,7 @@ describe('PUT Question Helpfulness', () => {
     const productID = Math.ceil(Math.random() * 1000000);
     let questionID = null;
     let helpfulness = null;
-    frisby
+    return frisby
       .get(`http://localhost:3000/qa/${productID}`)
       .then((req) => {
         const question = JSON.parse(req.body).results[0];
@@ -51,5 +51,24 @@ describe('PUT Question Helpfulness', () => {
   it('should return status 204', () => frisby.put('http://localhost:3000/qa/question/1/helpful').expect('status', 204));
 });
 describe('PUT Question Reported', () => {
+  it('should properly set a question as reported', () => {
+    const productID = Math.ceil(Math.random() * 1000000);
+    let firstQuestionID = null;
+    return frisby
+      .get(`http://localhost:3000/qa/${productID}`)
+      .then((req) => {
+        const question = JSON.parse(req.body).results[0];
+        // some products don't have any questions and this test would break without the ternary
+        firstQuestionID = question ? question.question_id : 0;
+        return frisby.put(`http://localhost:3000/qa/question/${firstQuestionID}/report`);
+      })
+      .then(() => frisby.get(`http://localhost:3000/qa/${productID}`))
+      .then((req) => {
+        const question = JSON.parse(req.body).results[0];
+        // some products don't have any questions and this test would break without the ternary
+        const secondQuestionID = question ? question.question_id : 1;
+        expect(secondQuestionID).not.toBe(firstQuestionID);
+      });
+  });
   it('should return status 204', () => frisby.put('http://localhost:3000/qa/question/1/report').expect('status', 204));
 });
