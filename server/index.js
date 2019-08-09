@@ -14,5 +14,6 @@ app.use('/qa', routes);
 app.use(express.static('token'));
 
 app.listen(port, () => {
+  // eslint-disable-next-line no-console
   console.log(` > Listening on port ${port}`);
 });

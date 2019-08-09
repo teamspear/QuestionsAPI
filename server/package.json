@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "lint": "eslint . --fix",
-    "precommit": "npm run lint ; npm run test",
+    "lint": "eslint . --fix --max-warnings=0",
+    "precommit": "npm run lint && npm run test",
     "dev": "nodemon --inspect index.js",
     "start": "node index.js"
   },
