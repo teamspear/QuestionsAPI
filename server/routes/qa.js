@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const express = require('express');
 
 const router = express.Router();
@@ -14,12 +15,14 @@ router.get('/:product_id', (req, res) => {
 
   questions
     .getQuestions(req.params.product_id, count, offset)
-    .then((qsWithoutAs) => {
+    .then(({ rows }) => {
+      const qsWithoutAs = rows;
       const qsGettingAs = [];
       for (let i = 0; i < qsWithoutAs.length; i += 1) {
         const question = qsWithoutAs[i];
         qsGettingAs.push(
-          questions.getAnswers(question.question_id).then((questionAnswers) => {
+          questions.getAnswers(question.question_id).then((data) => {
+            const questionAnswers = data.rows;
             question.answers = {};
             for (let j = 0; j < questionAnswers.length; j += 1) {
               const answer = questionAnswers[j];
@@ -49,12 +52,12 @@ router.get('/:question_id/answers', (req, res) => {
 
   answers
     .getAnswers(req.params.question_id, count, offset)
-    .then((results) => {
+    .then(({ rows }) => {
       const data = {
         question: req.params.question_id,
         page,
         count,
-        results,
+        results: rows,
       };
       res.send(data);
     })

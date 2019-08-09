@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-const db = require('../db');
+const pool = require('../db');
 
 const questions = {
   getQuestions: (product_id, count, offset) => {
@@ -10,7 +10,7 @@ const questions = {
     LIMIT $2 OFFSET $3
     `;
 
-    return db.any(query, [product_id, count, offset]);
+    return pool.query(query, [product_id, count, offset]);
   },
 
   getAnswers: (question_id) => {
@@ -19,7 +19,7 @@ const questions = {
     FROM answer WHERE question_id = $1 and reported = false
     `;
 
-    return db.any(query, [question_id]);
+    return pool.query(query, [question_id]);
   },
 
   postQuestion: (product_id, reqBody) => {
@@ -28,12 +28,7 @@ const questions = {
     VALUES ($1, $2, $3, $4) RETURNING id
     `;
 
-    return db.any(query, [
-      product_id,
-      reqBody.body,
-      reqBody.name,
-      reqBody.email,
-    ]);
+    return pool.query(query, [product_id, reqBody.body, reqBody.name, reqBody.email]);
   },
 
   markQuestionHelpful: (question_id) => {
@@ -43,7 +38,7 @@ const questions = {
     WHERE id = $1
     `;
 
-    return db.any(query, [question_id]);
+    return pool.query(query, [question_id]);
   },
 
   reportQuestion: (question_id) => {
@@ -53,7 +48,7 @@ const questions = {
     WHERE id = $1
     `;
 
-    return db.any(query, [question_id]);
+    return pool.query(query, [question_id]);
   },
 };
 
@@ -65,7 +60,7 @@ const answers = {
     LIMIT $2 OFFSET $3
     `;
 
-    return db.any(query, [question_id, count, offset]);
+    return pool.query(query, [question_id, count, offset]);
   },
 
   postAnswer: (question_id, reqBody) => {
@@ -74,7 +69,7 @@ const answers = {
     VALUES ($1, $2, $3, $4, $5) RETURNING id
     `;
 
-    return db.any(query, [
+    return pool.query(query, [
       question_id,
       reqBody.body,
       reqBody.name,
@@ -90,7 +85,7 @@ const answers = {
     WHERE id = $1
     `;
 
-    return db.any(query, [answer_id]);
+    return pool.query(query, [answer_id]);
   },
 
   reportAnswer: (answer_id) => {
@@ -100,7 +95,7 @@ const answers = {
     WHERE id = $1
     `;
 
-    return db.any(query, [answer_id]);
+    return pool.query(query, [answer_id]);
   },
 };
 
