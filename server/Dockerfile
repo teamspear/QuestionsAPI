@@ -2,16 +2,11 @@ FROM node:10
 
 WORKDIR /usr/src/app
 
-COPY package*.json ./
-
-RUN npm install
-
 COPY . .
 
-## Dont need to Exose ports when using docker-compose
-# EXPOSE 8080
+RUN npm install --only=prod
 
-CMD npm run dev
+CMD ["npm", "run", "start"]
 
 
 
