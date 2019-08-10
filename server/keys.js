@@ -4,4 +4,5 @@ module.exports = {
   dbHOST: process.env.dbHOST,
   dbPORT: process.env.dbPORT,
   dbDATABASE: process.env.dbDATABASE,
+  redisHOST: process.env.redisHOST,
 };

@@ -6,7 +6,7 @@ const router = express.Router();
 router.use(express.json());
 
 const { questions, answers } = require('../models');
-const { redisQuestions, redisCommands } = require('../models/redis-models');
+const { redisQuestions, redisAnswers, redisCommands } = require('../models/redis-models');
 
 // GET Questions
 router.get('/:product_id', (req, res) => {
@@ -20,7 +20,7 @@ router.get('/:product_id', (req, res) => {
       if (!result) {
         throw new Error('Record not in redis');
       } else {
-        console.log('sent from redis');
+        console.log('redis request successful');
         res.send(JSON.parse(result));
       }
     })
@@ -62,20 +62,33 @@ router.get('/:question_id/answers', (req, res) => {
   const count = req.query.count || 5;
   const offset = Math.max(0, (page - 1) * count);
 
-  answers
+  redisAnswers
     .getAnswers(req.params.question_id, count, offset)
-    .then((results) => {
-      const data = {
-        question: req.params.question_id,
-        page,
-        count,
-        results,
-      };
-      res.send(data);
+    .then((result) => {
+      if (!result) {
+        throw new Error('Record not in redis');
+      } else {
+        console.log('redis request successful');
+        res.send(JSON.parse(result));
+      }
     })
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
+    .catch(() => {
+      answers
+        .getAnswers(req.params.question_id, count, offset)
+        .then((results) => {
+          const data = {
+            question: req.params.question_id,
+            page,
+            count,
+            results,
+          };
+          redisAnswers.setAnswers(req.params.question_id, count, offset, JSON.stringify(data));
+          res.send(data);
+        })
+        .catch((err) => {
+          console.error(err);
+          res.sendStatus(500);
+        });
     });
 });
 

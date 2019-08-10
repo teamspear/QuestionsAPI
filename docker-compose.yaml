@@ -21,6 +21,7 @@ services:
       - dbHOST=db
       - dbPORT=5432
       - dbDATABASE=q_and_a
+      - redisHOST=redis-server
     volumes:
       - "/usr/src/app/node_modules"
       - "./server:/usr/src/app"

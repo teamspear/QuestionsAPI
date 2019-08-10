@@ -3,8 +3,10 @@ const redis = require('redis');
 
 promise.promisifyAll(redis);
 
+const { redisHOST } = require('../keys');
+
 const redisClient = redis.createClient({
-  host: 'redis-server',
+  host: redisHOST,
   port: 6379,
 });
 

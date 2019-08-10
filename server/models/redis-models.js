@@ -8,6 +8,11 @@ const redisQuestions = {
   setQuestions: (product_id, count, offset, result) => redisClient.set(`q${product_id}c${count}o${offset}`, result),
 };
 
+const redisAnswers = {
+  getAnswers: (question_id, count, offset) => redisClient.getAsync(`a${question_id}c${count}o${offset}`),
+  setAnswers: (question_id, count, offset, result) => redisClient.set(`a${question_id}c${count}o${offset}`, result),
+};
+
 const redisCommands = { redisFlush: () => redisClient.flushall() };
 
-module.exports = { redisQuestions, redisCommands };
+module.exports = { redisQuestions, redisAnswers, redisCommands };
