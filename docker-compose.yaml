@@ -8,6 +8,8 @@ services:
       - POSTGRES_PASSWORD=password
     volumes:
       - "../efs:/usr/csvs"
+  redis-server:
+    image: redis:latest
   node:
     image: node-dev:latest
     restart: always
