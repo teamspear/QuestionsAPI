@@ -23,8 +23,10 @@
     "nodemon": "^1.19.1"
   },
   "dependencies": {
+    "bluebird": "^3.5.5",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "pg-promise": "^9.0.0"
+    "pg-promise": "^9.0.0",
+    "redis": "^2.8.0"
   }
 }
